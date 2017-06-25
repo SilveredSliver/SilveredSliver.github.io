@@ -37,7 +37,14 @@ var imgFileList = [
   'usb.gif',
   'water-can.jpg',
   'wine-glass.jpg' ];
-  var imgList = [];//starts as an empty array
+
+  var imgList = localStorage.pictureClickData;
+  if (imgList === undefined || imgList === null) {
+    imgList = [];//this starts and empty array UNLESS localStorage already has a key named "pictureClickData"
+  } else {
+    imgList = JSON.parse(imgList);
+  }
+
   for (var i = 0; i < imgFileList.length; i++) {
     var myImage = new getImage(imgFileList[i], 'img');
     console.log(myImage);
@@ -53,6 +60,7 @@ var imgFileList = [
     imgList[curThree.theImages[0]].numClicked++;
     if (totalNumClicked < 26) displayImages()
     else renderChart();
+    localStorage.pictureClickData = JSON.stringify(imgList)
   }
   b1.addEventListener('click', addClickEvent1);
 
@@ -62,6 +70,7 @@ var b2 = document.getElementById('b2');
     imgList[curThree.theImages[1]].numClicked++;
     if (totalNumClicked < 26) displayImages()
     else renderChart();
+    localStorage.pictureClickData = JSON.stringify(imgList)
   }
   b2.addEventListener('click', addClickEvent2);
 
@@ -71,6 +80,7 @@ var b2 = document.getElementById('b2');
     imgList[curThree.theImages[2]].numClicked++;
     if (totalNumClicked < 26) displayImages()
     else renderChart();
+  localStorage.pictureClickData = JSON.stringify(imgList)
   }
   b3.addEventListener('click', addClickEvent3);
 
@@ -127,7 +137,6 @@ var b2 = document.getElementById('b2');
 
     console.log('num clicked ' + totalNumClicked);
 
-    localStorage.pictureClickData = JSON.stringify(imgList)
   }
 
 var curThree = []
